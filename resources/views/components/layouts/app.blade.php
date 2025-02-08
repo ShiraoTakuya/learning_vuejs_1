@@ -12,5 +12,8 @@
     <div id="app">
         {{ $slot }} <!-- この部分に home.blade.php の内容が挿入される -->
     </div>
+    <div id="app2">
+        {{ $slot }} <!-- この部分に home.blade.php の内容が挿入される -->
+    </div>
 </body>
 </html>

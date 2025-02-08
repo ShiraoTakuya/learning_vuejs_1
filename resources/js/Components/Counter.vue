@@ -5,6 +5,6 @@ const count = ref(0);
 
 <template>
   <div>
-    {{ count }} <button v-on:click="count++">Increment</button>
+    {{ count }} <button @click="count++">Increment</button>
   </div>
 </template>
