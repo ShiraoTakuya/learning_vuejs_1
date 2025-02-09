@@ -5,15 +5,21 @@
       :type="type"
       :placeholder="placeholder"
       :value="value"
+      :name="name"
       @input="$emit('update:value', $event)"
       class="border p-2 rounded w-full"
     />
     <button @click="sendWord">sendWord</button>
+    <button @click="testfunc">testfunc</button>
   </div>
 </template>
 
 <script>
+import * as script from '../../../public/js/script.js';
 export default {
+  created(){
+    script.testfunc();
+  },
   name: "FormComponent",
   props: {
     label: {
