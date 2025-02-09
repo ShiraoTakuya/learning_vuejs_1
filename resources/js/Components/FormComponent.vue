@@ -1,42 +1,48 @@
 <template>
-  <div>
-    <h1>フォーム</h1>
-    <form>
-      <LabelInput
-        v-for="(field, index) in fields"
-        :key="index"
-        :label="field.label"
-        :name="field.name"
-        v-model="formData[field.name]"
-      />
-    </form>
+  <div class="form-item">
+    <label :for="label">{{ label }}</label>
+    <input
+      :type="type"
+      :placeholder="placeholder"
+      :value="value"
+      @input="$emit('update:value', $event)"
+      class="border p-2 rounded w-full"
+    />
+    <button @click="sendWord">sendWord</button>
   </div>
 </template>
 
 <script>
-import LabelInput from './LabelInput.vue';
-
 export default {
-  components: {
-    LabelInput,
+  name: "FormComponent",
+  props: {
+    label: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      default: "text",
+    },
+    placeholder: {
+      type: String,
+      default: "",
+    },
+    value: {
+      type: String,
+      required: true,
+    },
   },
-  data() {
-    return {
-      formData: {
-        username: '',
-        email: '',
-        password: '',
-      },
-      fields: [
-        { label: 'Username', name: 'username' },
-        { label: 'Email', name: 'email' },
-        { label: 'Password', name: 'password' },
-      ],
-    };
+  methods: {
+    sendWord(){
+      this.$emit("my-click", "やったぜ");
+    },
   },
-}
+};
 </script>
 
 <style scoped>
-/* スタイルが必要な場合はここに書く */
+.form-item {
+  margin-bottom: 1rem;
+}
 </style>
