@@ -3,10 +3,16 @@
     <div v-for="(field, index) in fields" :key="index">
       <input type="text" v-model="field.value" :placeholder="'フィールド ' + (index + 1)" />
       <button @click="removeField(index)">削除</button>
+      <input v-model.number="num">
+      <select v-model.number="num">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
     </div>
     <button @click="addField">項目追加</button>
     word: {{word}}
-    <div v-for="n in initialData.a" :key="n">
+    <div v-for="n in num" :key="n">
       <FormComponent
         :label="'a'+n"
         :name="'a'+n"
@@ -16,6 +22,7 @@
         @my-click="receiveWord"
       />
     </div>
+    fixed_num: {{fixed_num}}
   </div>
 </template>
 
@@ -23,6 +30,9 @@
 import FormComponent from "./FormComponent.vue";
 
 export default {
+  created(){
+    this.fixed_num = this.fixed_num??this.num;
+  },
   data() {
     return {
       fields: [{ value: '' }],
@@ -30,6 +40,8 @@ export default {
         email: '',
       },
       word: '',
+      num: 5,
+      fixed_num: null,
     };
   },
   methods: {
