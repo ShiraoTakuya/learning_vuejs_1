@@ -17,6 +17,18 @@
 import * as script from '../../../public/js/script.js';
 
 export default {
+  data() {
+    return {
+      errorMessage: script.extract_error_message(this.errors, this.item),
+      def_value: script.select_def_value(this.old, this.item),
+    };
+  },
+  methods: {
+    handleInput(event) {
+      const newValue = event.target.value;
+      this.errorMessage = script.valdiate_value(newValue, this.item);
+    },
+  },
   props: {
     item: {
       type: Object,
@@ -29,18 +41,6 @@ export default {
     errors: {
       type: Object,
       required: true,
-    },
-  },
-  data() {
-    return {
-      errorMessage: script.extract_error_message(this.errors, this.item),
-      def_value: script.select_def_value(this.old, this.item),
-    };
-  },
-  methods: {
-    handleInput(event) {
-      const newValue = event.target.value;
-      this.errorMessage = script.valdiate_value(newValue, this.item);
     },
   },
 };
