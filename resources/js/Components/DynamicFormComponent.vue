@@ -4,7 +4,7 @@
       <input type="hidden" name="_token" :value="csrfToken">
       <div v-for="(item, index) in initialData.form_register" :key="index">
         <component
-          :is="FormComponent"
+          :is="item.type"
           :item="item"
           :old="old"
           :errors="errors"
@@ -17,18 +17,18 @@
 </template>
 
 <script>
-import FormComponent from "./FormComponent.vue";
+import InputType1 from "./InputType1.vue";
 import * as script from '../../../public/js/script.js';
 
 export default {
   data() {
     return {
       csrfToken: script.get_csrf(),
-      FormComponent: FormComponent, // FormComponentを変数に設定
+      InputType1: InputType1, // InputType1を変数に設定
     };
   },
   components: {
-    FormComponent,
+    InputType1,
   },
   props: {
     initialData: {
