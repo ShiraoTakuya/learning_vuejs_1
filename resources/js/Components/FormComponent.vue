@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import * as script from '../../../public/js/script.js';
+
 export default {
   props: {
     item: {
@@ -30,42 +32,15 @@ export default {
     },
   },
   data() {
-    let errorMessage = this.errors;
-    errorMessage = errorMessage[this.item.name];
-    errorMessage = errorMessage? errorMessage[0]: "";
-    let def_value = this.old;
-    def_value = def_value[this.item.name];
-    def_value = (def_value !== undefined)? def_value: eval(this.item.value_formula);
     return {
-      errorMessage: errorMessage,
-      def_value: def_value,
+      errorMessage: script.extract_error_message(this.errors, this.item),
+      def_value: script.select_def_value(this.old, this.item),
     };
-  },
-  watch: {
-    value(newValue) {
-      this.validateInput(newValue);
-    }
   },
   methods: {
     handleInput(event) {
       const newValue = event.target.value;
-      this.$emit('update:value', newValue);
-      this.validateInput(newValue);
-    },
-    validateInput(value) {
-      if (eval(this.item.valid_formula1)) {
-        this.errorMessage = this.item.error1;
-      } else if (eval(this.item.valid_formula2)){
-        this.errorMessage = this.item.error2;
-      } else if (eval(this.item.valid_formula3)){
-        this.errorMessage = this.item.error3;
-      } else if (eval(this.item.valid_formula4)){
-        this.errorMessage = this.item.error4;
-      } else if (eval(this.item.valid_formula5)){
-        this.errorMessage = this.item.error5;
-      } else {
-        this.errorMessage = "";
-      }
+      this.errorMessage = script.valdiate_value(newValue, this.item);
     },
   },
 };
