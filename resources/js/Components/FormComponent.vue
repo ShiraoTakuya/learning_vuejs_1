@@ -1,11 +1,12 @@
 <template>
   <div class="form-item">
-    <label :for="label">{{ label }}</label>
+    <label :for="label">{{ item.label }}</label>
     <input
-      :type="type"
-      :placeholder="placeholder"
-      :name="name"
+      type="input"
+      :placeholder="item.placeholder"
+      :name="item.name"
       @input="handleInput"
+      v-model="def_value"
       class="border p-2 rounded w-full"
     />
     <div v-if="errorMessage" class="text-red-500">{{ errorMessage }}</div>
@@ -13,113 +14,31 @@
 </template>
 
 <script>
-import * as script from '../../../public/js/script.js';
 export default {
-  created(){
-    script.testfunc();
-  },
-  name: "FormComponent",
   props: {
-    label: {
+    item: {
+      type: Object,
+      required: true,
+    },
+    old: {
       type: String,
       required: true,
     },
-    type: {
-      type: String,
-      default: "text",
-    },
-    placeholder: {
-      type: String,
-      default: "",
-    },
-    value: {
-      type: String,
+    errors: {
+      type: Object,
       required: true,
-    },
-    validate1: {
-      type: String,
-      default: "",
-    },
-    validate2: {
-      type: String,
-      default: "",
-    },
-    validate3: {
-      type: String,
-      default: "",
-    },
-    validate4: {
-      type: String,
-      default: "",
-    },
-    validate5: {
-      type: String,
-      default: "",
-    },
-    validate6: {
-      type: String,
-      default: "",
-    },
-    validate7: {
-      type: String,
-      default: "",
-    },
-    validate8: {
-      type: String,
-      default: "",
-    },
-    validate9: {
-      type: String,
-      default: "",
-    },
-    validate10: {
-      type: String,
-      default: "",
-    },
-    error1: {
-      type: String,
-      default: "",
-    },
-    error2: {
-      type: String,
-      default: "",
-    },
-    error3: {
-      type: String,
-      default: "",
-    },
-    error4: {
-      type: String,
-      default: "",
-    },
-    error5: {
-      type: String,
-      default: "",
-    },
-    error6: {
-      type: String,
-      default: "",
-    },
-    error7: {
-      type: String,
-      default: "",
-    },
-    error8: {
-      type: String,
-      default: "",
-    },
-    error9: {
-      type: String,
-      default: "",
-    },
-    error10: {
-      type: String,
-      default: "",
     },
   },
   data() {
+    let errorMessage = this.errors;
+    errorMessage = errorMessage[this.item.name];
+    errorMessage = errorMessage? errorMessage[0]: "";
+    let def_value = this.old;
+    def_value = def_value[this.item.name];
+    def_value = (def_value !== undefined)? def_value: eval(this.item.value_formula);
     return {
-      errorMessage: "",
+      errorMessage: errorMessage,
+      def_value: def_value,
     };
   },
   watch: {
@@ -134,26 +53,16 @@ export default {
       this.validateInput(newValue);
     },
     validateInput(value) {
-      if (eval(this.validate1)) {
-        this.errorMessage = this.error1;
-      } else if (eval(this.validate2)){
-        this.errorMessage = this.error2;
-      } else if (eval(this.validate3)){
-        this.errorMessage = this.error3;
-      } else if (eval(this.validate4)){
-        this.errorMessage = this.error4;
-      } else if (eval(this.validate5)){
-        this.errorMessage = this.error5;
-      } else if (eval(this.validate6)){
-        this.errorMessage = this.error6;
-      } else if (eval(this.validate7)){
-        this.errorMessage = this.error7;
-      } else if (eval(this.validate8)){
-        this.errorMessage = this.error8;
-      } else if (eval(this.validate9)){
-        this.errorMessage = this.error9;
-      } else if (eval(this.validate10)){
-        this.errorMessage = this.error10;
+      if (eval(this.item.valid_formula1)) {
+        this.errorMessage = this.item.error1;
+      } else if (eval(this.item.valid_formula2)){
+        this.errorMessage = this.item.error2;
+      } else if (eval(this.item.valid_formula3)){
+        this.errorMessage = this.item.error3;
+      } else if (eval(this.item.valid_formula4)){
+        this.errorMessage = this.item.error4;
+      } else if (eval(this.item.valid_formula5)){
+        this.errorMessage = this.item.error5;
       } else {
         this.errorMessage = "";
       }
