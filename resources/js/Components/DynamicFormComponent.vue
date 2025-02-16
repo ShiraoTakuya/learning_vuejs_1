@@ -1,28 +1,34 @@
 <template>
-  <div>
-    <div v-for="(field, index) in fields" :key="index">
-      <input type="text" v-model="field.value" :placeholder="'フィールド ' + (index + 1)" />
-      <button @click="removeField(index)">削除</button>
-      <input v-model.number="num">
-      <select v-model.number="num">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
-    </div>
-    <button @click="addField">項目追加</button>
-    word: {{word}}
-    <div v-for="n in num" :key="n">
-      <FormComponent
-        :label="'a'+n"
-        :name="'a'+n"
-        type="text"
-        :value="n"
-        placeholder="Enter your email"
-        @my-click="receiveWord"
-      />
-    </div>
-    fixed_num: {{fixed_num}}
+  <div v-for="(item, index) in initialData.form_register" :key="index">
+    <component
+      :is="FormComponent"
+      :label="item.name"
+      :name="item.name"
+      :type="item.type"
+      :value="item.value"
+      :placeholder="item.placeholder"
+      :validate1="item.validate1"
+      :validate2="item.validate2"
+      :validate3="item.validate3"
+      :validate4="item.validate4"
+      :validate5="item.validate5"
+      :validate6="item.validate6"
+      :validate7="item.validate7"
+      :validate8="item.validate8"
+      :validate9="item.validate9"
+      :validate10="item.validate10"
+      :error1="item.error1"
+      :error2="item.error2"
+      :error3="item.error3"
+      :error4="item.error4"
+      :error5="item.error5"
+      :error6="item.error6"
+      :error7="item.error7"
+      :error8="item.error8"
+      :error9="item.error9"
+      :error10="item.error10"
+      @child_input="child_input"
+    />
   </div>
 </template>
 
@@ -30,28 +36,14 @@
 import FormComponent from "./FormComponent.vue";
 
 export default {
-  created(){
-    this.fixed_num = this.fixed_num??this.num;
-  },
   data() {
     return {
-      fields: [{ value: '' }],
-      form: {
-        email: '',
-      },
-      word: '',
-      num: 5,
-      fixed_num: null,
+      FormComponent: FormComponent, // FormComponentを変数に設定
+      child_input: "",
     };
   },
   methods: {
-    addField() {
-      this.fields.push({ value: '' });
-    },
-    removeField(index) {
-      this.fields.splice(index, 1);
-    },
-    receiveWord(value){
+    child_input(value){
       this.word = value;
     }
   },
