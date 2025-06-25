@@ -13,37 +13,35 @@
   </div>
 </template>
 
-<script>
-import * as script from '../../../public/js/script.js';
+<script setup>
+import { ref } from 'vue'
+import * as script from '../../../public/js/script.js'
 
-export default {
-  data() {
-    return {
-      errorMessage: script.extract_error_message(this.errors, this.item),
-      def_value: script.select_def_value(this.old, this.item),
-    };
+// props
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true
   },
-  methods: {
-    handleInput(event) {
-      const newValue = event.target.value;
-      this.errorMessage = script.valdiate_value(newValue, this.item);
-    },
+  old: {
+    type: String,
+    required: true
   },
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-    old: {
-      type: String,
-      required: true,
-    },
-    errors: {
-      type: Object,
-      required: true,
-    },
-  },
-};
+  errors: {
+    type: Object,
+    required: true
+  }
+})
+
+// 初期値のセット
+const def_value = ref(script.select_def_value(props.old, props.item))
+const errorMessage = ref(script.extract_error_message(props.errors, props.item))
+
+// 入力時のバリデーション
+function handleInput(event) {
+  const newValue = event.target.value
+  errorMessage.value = script.valdiate_value(newValue, props.item)
+}
 </script>
 
 <style scoped>

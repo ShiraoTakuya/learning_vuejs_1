@@ -1,8 +1,5 @@
 import './bootstrap';
 import { createApp } from 'vue';
-import DynamicFormComponent from './Components/DynamicFormComponent.vue';
+import PageComponent from './Components/PageComponent.vue';
 
-// Vueを特定のDOM要素にマウント
-const app = createApp({});
-app.component('dynamic-form-component', DynamicFormComponent);
-app.mount('#form1');
+createApp({ components: { PageComponent } }).mount('#page1');

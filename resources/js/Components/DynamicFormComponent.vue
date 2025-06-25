@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <form :action="form_route" method="post">
-      <input type="hidden" name="_token" :value="csrfToken">
+    <form :action="formRoute" method="post">
+      <input type="hidden" name="_token" :value="csrfToken" />
       <div v-for="(item, index) in initialData.form_register" :key="index">
         <component
-          :is="item.type"
+          :is="componentMap[item.type]"
           :item="item"
           :old="old"
           :errors="errors"
@@ -16,49 +16,40 @@
   </div>
 </template>
 
-<script>
-import InputType1 from "./InputType1.vue";
-import * as script from '../../../public/js/script.js';
+<script setup>
+import { ref } from 'vue'
+import InputType1 from './InputType1.vue'
+import * as script from '../../../public/js/script.js'
 
-export default {
-  data() {
-    return {
-      csrfToken: script.get_csrf(),
-      InputType1: InputType1, // InputType1を変数に設定
-    };
-  },
-  components: {
-    InputType1,
-  },
-  props: {
-    initialData: {
-      type: Object,
-      required: true
-    },
-    form_route: {
-      type: String,
-      required: true
-    },
-    old: {
-      type: Object,
-      required: true
-    },
-    errors: {
-      type: Object,
-      required: true
-    },
-  }
-};
+// props
+const props = defineProps({
+  initialData: Object,
+  formRoute: String,
+  old: Object,
+  errors: Object
+})
+
+// CSRF トークン
+const csrfToken = ref(script.get_csrf())
+
+// イベント受け取り関数
+function child_input(value) {
+  console.log('子から:', value)
+}
+
+// 🔧 component名とコンポーネントを対応させるマップ
+const componentMap = {
+  InputType1
+}
 </script>
 
 <style scoped>
-button{
+button {
   border: 1px solid black;
   padding: 4px;
 }
-.container{
+.container {
   width: 99%;
   margin: 0 auto;
 }
-
 </style>
