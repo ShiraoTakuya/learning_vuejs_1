@@ -2,7 +2,7 @@
   <div class="container">
     <form :action="formRoute" method="post">
       <input type="hidden" name="_token" :value="csrfToken" />
-      <div v-for="(item, index) in initialData.form_register" :key="index">
+      <div v-for="(item, index) in initialData" :key="index">
         <component
           :is="componentMap[item.type]"
           :item="item"
@@ -14,12 +14,25 @@
       <button type="submit">Submit</button>
     </form>
   </div>
+  <pre>{{ responseData }}</pre>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import InputType1 from './InputType1.vue'
 import * as script from '../../../public/js/script.js'
+
+// constructor
+import axios from 'axios'
+const responseData = ref(null)
+onMounted(async () => {
+    try {
+        const res = await axios.get('/api/dynamic-form-component')
+        responseData.value = res.data
+    } catch (e) {
+        console.error('API取得失敗', e)
+    }
+})
 
 // props
 const props = defineProps({

@@ -1,5 +1,13 @@
-import './bootstrap';
-import { createApp } from 'vue';
-import PageComponent from './Components/PageComponent.vue';
+import { createApp, h } from 'vue'
+import { createInertiaApp } from '@inertiajs/vue3'
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 
-createApp({ components: { PageComponent } }).mount('#page1');
+createInertiaApp({
+  resolve: name =>
+    resolvePageComponent(`./Components/${name}.vue`, import.meta.glob('./Components/**/*.vue')),
+  setup({ el, App, props, plugin }) {
+    createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .mount(el)
+  },
+})

@@ -19,18 +19,9 @@ import * as script from '../../../public/js/script.js'
 
 // props
 const props = defineProps({
-  item: {
-    type: Object,
-    required: true
-  },
-  old: {
-    type: String,
-    required: true
-  },
-  errors: {
-    type: Object,
-    required: true
-  }
+  item: Object,
+  old: String,
+  errors: Object,
 })
 
 // 初期値のセット

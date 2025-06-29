@@ -18,9 +18,7 @@ export function valdiate_value(value, item) {
 }
 
 export function extract_error_message(errors, item){
-  let errorMessage = errors;
-  errorMessage = errorMessage[item.name];
-  errorMessage = errorMessage? errorMessage[0]: "";
+  let errorMessage = (errors && errors[item.name]) ? errors[item.name][0] : "";
   return errorMessage;
 }
 

@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+// use Inertia\Inertia;
+// use App\Inertia\VueConstructor;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +22,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Inertia::share([
+        //     'sharedProps' => function () {
+        //         return [
+        //             'DynamicFormComponent' => function () {
+        //                 return VueConstructor::DynamicFormComponent();
+        //             }
+        //         ];
+        //     }
+        // ]);
     }
+
 }

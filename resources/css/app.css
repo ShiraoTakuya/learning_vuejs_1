@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* カスタム */
+a{
+    color: blue;
+    text-decoration: underline;
+}

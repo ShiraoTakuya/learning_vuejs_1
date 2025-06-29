@@ -3,29 +3,33 @@
       これはただのタイトルです
     </div>
     <div>
-      <dynamic-form-component
-        :form-route="formRoute"
-        :initial-data="initialData"
-        :old="old"
-        :errors="errors"
-      />
+        <dynamic-form-component
+  :form-route="props.data.formRoute"
+  :initial-data="props.data.initialData"
+  :old="props.data.old"
+  :errors="props.data.errors"
+/>
       <button @click="showModal = true">モーダルを開く</button>
       <modal-form :show="showModal" @close="showModal = false" />
     </div>
+    <Link href="/page2">ページ2へ移動（SPA）</Link>
   </template>
   
   <script setup>
+import { Link } from '@inertiajs/vue3'
   import { ref } from 'vue'
   import DynamicFormComponent from './DynamicFormComponent.vue'
   import ModalForm from './ModalForm.vue'
   
+import AppLayout from '@/Layouts/AppLayout.vue'
+defineOptions({
+  layout: AppLayout,
+})
+  
   // propsの定義
-  defineProps({
-    formRoute: String,
-    initialData: Object,
-    old: Object,
-    errors: Object
-  })
+  const props = defineProps({
+  data: Object,
+})
   
   // モーダル表示状態（リアクティブ）
   const showModal = ref(false)
