@@ -1,26 +1,29 @@
 <template>
-  <div class="container">
-    <form :action="formRoute" method="post">
-      <input type="hidden" name="_token" :value="csrfToken" />
-      <div v-for="(item, index) in initialData" :key="index">
-        <component
-          :is="componentMap[item.type]"
-          :item="item"
-          :old="old"
-          :errors="errors"
-          @child_input="child_input"
-        />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
+  <div v-if="isReady">
+    <div class="container">
+      <form :action="formRoute" method="post">
+        <input type="hidden" name="_token" :value="csrfToken" />
+        <div v-for="(item, index) in initialData" :key="index">
+          <component
+            :is="componentMap[item.type]"
+            :item="item"
+            :old="old"
+            :errors="errors"
+          />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <pre>{{ responseData }}</pre>
   </div>
-  <pre>{{ responseData }}</pre>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import InputType1 from './InputType1.vue'
 import * as script from '../../../public/js/script.js'
+
+const isReady = ref(false)
 
 // constructor
 import axios from 'axios'
@@ -32,6 +35,7 @@ onMounted(async () => {
     } catch (e) {
         console.error('API取得失敗', e)
     }
+    isReady.value = true;
 })
 
 // props
@@ -44,11 +48,6 @@ const props = defineProps({
 
 // CSRF トークン
 const csrfToken = ref(script.get_csrf())
-
-// イベント受け取り関数
-function child_input(value) {
-  console.log('子から:', value)
-}
 
 // 🔧 component名とコンポーネントを対応させるマップ
 const componentMap = {
