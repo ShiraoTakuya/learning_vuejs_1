@@ -22,15 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Inertia::share([
-        //     'sharedProps' => function () {
-        //         return [
-        //             'DynamicFormComponent' => function () {
-        //                 return VueConstructor::DynamicFormComponent();
-        //             }
-        //         ];
-        //     }
-        // ]);
+        //
     }
 
 }
